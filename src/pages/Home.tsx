@@ -1,17 +1,25 @@
-import { useEffect, useState } from "react";
-import { getList } from "../proxy/api";
+import { useState } from "react";
+import { useGetList, useGetGenres } from "../proxy/api";
+import { MovieCard } from "../components/MovieCard";
+import { Pagination } from "../components/Pagination";
 
 export function Home() {
-    const [listMovie, setListMovie] = useState<any[]>([]);
+  const [page, setPage] = useState(1);
 
-    useEffect(() => {
-        const fetchData = async () => {
-            const movies = await getList();
-            setListMovie(movies);
-        };
+  const { movies, totalPages, loading: loadingMovies } = useGetList(page);
+  const { genres, loading: loadingGenres } = useGetGenres();
 
-        fetchData();
-    }, []);
+  if (loadingMovies || loadingGenres) return <p className="text-center text-white">Loading...</p>;
 
-    return <h1>Bienvenue sur la page d'Accueil</h1>;
+  return (
+    <div className="p-4">
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 mb-6">
+        {movies.map((movie: any) => (
+          <MovieCard key={movie.id} movie={movie} genresMap={genres} />
+        ))}
+      </div>
+
+      <Pagination page={page} totalPages={totalPages} setPage={setPage} />
+    </div>
+  );
 }
