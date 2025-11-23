@@ -1,4 +1,4 @@
-## Démarrage (français)
+## Démarrage
 
 Ce projet utilise Vite + React + TypeScript. Les instructions ci-dessous expliquent comment initialiser et lancer l'application en environnement de développement, ainsi que les commandes de build et de preview.
 
