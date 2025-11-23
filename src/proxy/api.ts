@@ -28,8 +28,10 @@ export const useFetch = (url: string, options: RequestInit) => {
 };
 
 export const useGetList = (page: number = 1) => {
+  const safePage = Math.max(1, Math.min(Math.trunc(page), 500));
+
   const url =
-    `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${page}&sort_by=popularity.desc`;
+    `https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=${safePage}&sort_by=popularity.desc`;
 
   const options = {
     method: "GET",
@@ -43,7 +45,7 @@ export const useGetList = (page: number = 1) => {
 
   return {
     movies: data?.results ?? [],
-    totalPages: data?.total_pages ?? 1,
+    totalPages: Math.min(data?.total_pages ?? 1, 500),
     loading,
     error,
   };

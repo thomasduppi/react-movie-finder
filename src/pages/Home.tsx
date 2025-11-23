@@ -5,7 +5,6 @@ import { Pagination } from "../components/Pagination";
 
 export function Home() {
   const [page, setPage] = useState(1);
-
   const { movies, totalPages, loading: loadingMovies } = useGetList(page);
   const { genres, loading: loadingGenres } = useGetGenres();
 

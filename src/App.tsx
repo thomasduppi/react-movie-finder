@@ -1,9 +1,11 @@
 import './App.css'
 import { BrowserRouter, Link, Route, Routes } from "react-router-dom"
 import { Home } from './pages/Home'
+import { FavoritesPage } from './pages/Favorites'
+import { FavoritesProvider } from './contexts/FavoritesContext'
 
 
-function App() {
+function AppContent() {
   return (
     <>
     <BrowserRouter>
@@ -17,9 +19,19 @@ function App() {
       </nav>
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/favorites" element={<h1>Page des Favoris</h1>} />
+        <Route path="/favorites" element={<FavoritesPage />} />
       </Routes>
     </BrowserRouter>
+    </>
+  )
+}
+
+function App() {
+  return (
+    <>
+      <FavoritesProvider>
+        <AppContent />
+      </FavoritesProvider>
     </>
   )
 }
